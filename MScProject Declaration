@@ -1,0 +1,30 @@
+
+Copyright (c) 2019, Andreas Papachristodoulou, PXA573, MSc Robotics Final Project.
+
+The source codes provided in this project are my personal work; ST-GCN work by:
+https://github.com/yysijie/st-gcn/blob/master/OLD_README.md, ST-GCN and
+redistribution of independently developed packages.
+
+
+- The files stored in the PXA573 file are, or are either contained in PXA573 named folder are my personal work.
+- The ST-GCN work was used as the baseline for the deep learning framework and integration, the files we altered so
+that we have extra features are the ones stored in the UseInST-GCN. Simply replace the main, and add the pxa573_rec.py
+stored in the USEInST-GCN
+
+If you want to pre-process data from MoCap use MainPreprocessor.py in PXA573/preprocessing
+If you want to add distortions to data from MoCap use files in PXA573/postprocessing
+If you want to turn your data back to c3d format use the homonymous file in backtoc3d
+
+In the codes provided you need to change the directories required.
+
+If you want to download our benchmarks or use our data for training:
+- download data: https://drive.google.com/open?id=1YNgApnmZqXGQNHL1WLXyhZRSbzr-aq1V
+
+If you simply want to run our benchmarks using the ST-GCN:
+
+- Clone the https://github.com/yysijie/st-gcn/blob/master/OLD_README.md project, ST-GCN and follow their instructions
+- assign the appropriate directories and weights in the /config/st_gcn/xx/test.yaml files
+- run the command 'python main.py pxa573rec -c config/st_gcn/< fill >/test.yaml'
+* In the empty to fill space write ntu-xview or ntu-xsub with regard to which model you want to test
+ 
+Feel free to use the code and data, if you have any queries contact me at: Papachrist@outlook.com
