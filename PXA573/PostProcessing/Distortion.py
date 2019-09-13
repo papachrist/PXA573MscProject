@@ -4,20 +4,88 @@ import pickle
 import random
 import math
 
-rightarm = [[24,12], [25,12], [12,11], [11,10], [9,10]]
-leftarm  = [[21,5], [5,6], [6,7], [7,8], [8,22], [8,23]]
-mainbody = [[9,21], [21,3], [4,3], [21,2], [2,1], [1,17], [1,13]]
-leftleg  = [[13,14],[14,15], [15,16]]
-rightleg = [[17,18],[18,19], [19,20]]
+rightarm = [[24,12], [25,12], [12,11], [11,10]]
+leftarm  = [[6,7], [7,8], [8,22], [8,23]]
+ucentrbody = [[21,3], [4,3], [5,6], [9,10]]
+
+lcentrbody = [[9,21], [21, 5], [21,2], [2,1]] # [1,17], [1,13]]
+leftleg  = [[13,14],[14,15], [15,16], [1, 17]]
+rightleg = [[17,18],[18,19], [19,20], [1, 13]]
+
+upperbones = []
+lowerbones = []
+
+upperbones.append(rightarm)
+upperbones.append(leftarm)
+upperbones.append(ucentrbody)
+lowerbones.append(lcentrbody)
+lowerbones.append(leftleg)
+lowerbones.append(rightleg)
+
 bones = []
 bones.extend(rightarm)
 bones.extend(leftarm)
-bones.extend(mainbody)
+bones.extend(ucentrbody)
+bones.extend(lcentrbody)
 bones.extend(leftleg)
 bones.extend(rightleg)
 
+
+upperbones = np.array(upperbones) - 1
+lowerbones = np.array(upperbones) - 1
 bones = np.array(bones) - 1
 
+
+def whichbones():
+
+    selbody = []
+    otherbody = []
+
+    occb = []
+
+    # newdata = []
+    # data = directory + f + '.npy'
+    # actions = np.load(data)
+    # print(actions.shape)
+
+    N = math.ceil(random.uniform(2, 4))
+    S = math.ceil(random.uniform(0, 2))
+
+    if S == 1:
+        selbody = upperbones
+        otherbody = lowerbones
+    else:
+        selbody = lowerbones
+        otherbody = upperbones
+
+    H = math.ceil(random.uniform(0, N))
+    R = N - H
+
+    occbones = 0
+    c = 0
+    while(len(occb) < N-1):
+        if len(occb) < H:
+            rg = math.ceil(random.uniform(0, 2))
+
+            G = math.ceil(random.uniform(0, H))
+            k = 4 - G
+            st = math.ceil(random.uniform(0, k))
+            for i in range(0, G):
+                    if len(occb) < H:
+                        occb.append([selbody[rg][i]])
+        else:
+            rg = math.ceil(random.uniform(0, 2))
+
+            G = math.ceil(random.uniform(0, R))
+
+
+            for i in range(0, G):
+                if len(occb) < N:
+                    occb.append([otherbody[rg][i]])
+
+    print(len(occb))
+    print(occb)
+    return occb
 
 def removebones(f):
 
@@ -32,6 +100,8 @@ def removebones(f):
         b = []
         for i in range(3):
             b.extend(bones[math.ceil(random.uniform(0, len(bones)-1))])
+
+        b = whichbones()
         for cr in a:
             crn = []
             for fr in cr:
@@ -90,17 +160,29 @@ def save(dt):
     np.save(outfile + name + '.npy', np.asarray(np.float32(dt)))
 
 
-directory = '/media/papachristo/My Passport/finalp/MyQualysis/combdata/'
+directory = '/media/papachristo/My Passport/finalp/MyQualysis/combdata/Vlf/'
 file = input('Input file name: ')
 
-dt = removebones(file)
+cmb = input('Do you want to distort the data in a combination of occlusion and noise [y/n]? ')
+if cmb == 'y':
+    dt = removebones(file)
+    dn = addnoise(file, dt)
+    sve = input('Save files [y/n]? ')
+    if sve == 'y':
+        save(dn)
 
-# sve = input('Save removedbones files [y/n]? ')
-# if sve == 'y':
-#     save(dt)
+rmb = input('Do you want to occlude bones [y/n]? ')
+if rmb == 'y':
+    dt = removebones(file)
+    sve = input('Save removed bones files [y/n]? ')
+    if sve == 'y':
+        save(dt)
 
-dn = addnoise(file, dt)
 
-sve = input('Save noise files [y/n]? ')
-if sve == 'y':
-    save(dn)
+adn = input('Do you want to add noise to the data [y/n]? ')
+if adn == 'y':
+    dn = addnoise(file, dt)
+
+    sve = input('Save noise files [y/n]? ')
+    if sve == 'y':
+        save(dn)
