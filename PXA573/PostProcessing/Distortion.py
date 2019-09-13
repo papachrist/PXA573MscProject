@@ -68,11 +68,11 @@ def whichbones():
             rg = math.ceil(random.uniform(0, 2))
 
             G = math.ceil(random.uniform(0, H))
-            k = 4 - G
-            st = math.ceil(random.uniform(0, k))
+            
             for i in range(0, G):
+                    ran = math.ceil(random.uniform(0, 3))
                     if len(occb) < H:
-                        occb.append([selbody[rg][i]])
+                        occb.append([selbody[rg][ran]])
         else:
             rg = math.ceil(random.uniform(0, 2))
 
@@ -80,8 +80,9 @@ def whichbones():
 
 
             for i in range(0, G):
+                ran = math.ceil(random.uniform(0, 3))
                 if len(occb) < N:
-                    occb.append([otherbody[rg][i]])
+                    occb.append([otherbody[rg][ran]])
 
     print(len(occb))
     print(occb)
