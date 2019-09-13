@@ -1,0 +1,49 @@
+# command line: main.py myrecbatch -c config/st_gcn/ntu-xview/train.yaml
+
+base_lr: 0.1
+batch_size: 8
+config: config/st_gcn/ntu-xview/train.yaml
+debug: false
+device: 0
+eval_interval: 1
+feeder: feeder.feeder.Feeder
+ignore_weights: []
+log_interval: 100
+model: net.st_gcn.Model
+model_args:
+    dropout: 0.5
+    edge_importance_weighting: true
+    graph_args:
+        layout: ntu-rgb+d
+        strategy: spatial
+    in_channels: 3
+    num_class: 60
+nesterov: true
+num_epoch: 5
+num_worker: 4
+optimizer: SGD
+pavi_log: false
+phase: train
+print_log: true
+save_interval: 1
+save_log: true
+save_result: false
+show_topk:
+- 1
+- 3
+- 5
+start_epoch: 0
+step:
+- 10
+- 50
+test_batch_size: 8
+test_feeder_args:
+    data_path: /media/papachristo/My Passport/finalp/MyQualysis/combdata/newtrout/xview/CVVL.npy
+    label_path: /media/papachristo/My Passport/finalp/MyQualysis/combdata/newtrout/xview/LCVVL.pkl
+train_feeder_args:
+    data_path: /media/papachristo/My Passport/finalp/MyQualysis/combdata/newtrout/xview/CVTR.npy
+    label_path: /media/papachristo/My Passport/finalp/MyQualysis/combdata/newtrout/xview/LCVTR.pkl
+use_gpu: true
+weight_decay: 0.0001
+weights: /media/papachristo/My Passport/finalp/MyQualysis/models/xview/ep5.pt
+work_dir: /media/papachristo/My Passport/finalp/MyQualysis/models/xview/
